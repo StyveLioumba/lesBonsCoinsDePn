@@ -50,9 +50,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/mapbox-gl/dist/mapbox-gl.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/mapbox-gl/dist/mapbox-gl.js"
+            ]
           },
           "configurations": {
             "production": {
