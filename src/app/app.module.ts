@@ -8,13 +8,17 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { HomeComponent } from './components/home/home.component';
 import { MapComponent } from './components/map/map.component';
+import { HeaderComponent } from './components/header/header.component';
+import { CardPlaceComponent } from './components/card-place/card-place.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotfoundComponent,
     HomeComponent,
-    MapComponent
+    MapComponent,
+    HeaderComponent,
+    CardPlaceComponent
   ],
   imports: [
     BrowserModule,

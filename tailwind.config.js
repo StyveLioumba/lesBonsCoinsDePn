@@ -1,12 +1,21 @@
+const { guessProductionMode } = require("@ngneat/tailwind");
+
+process.env.TAILWIND_MODE = guessProductionMode() ? 'build' : 'watch';
+
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {},
-  },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
-}
+    prefix: '',
+    mode: 'jit',
+    purge: {
+      content: [
+        './src/**/*.{html,ts,css,scss,sass,less,styl}',
+      ]
+    },
+    darkMode: false, // or 'media' or 'class'
+    theme: {
+      extend: {},
+    },
+    variants: {
+      extend: {},
+    },
+    plugins: [],
+};
