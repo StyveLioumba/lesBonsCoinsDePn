@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from "../../environments/environment";
 import * as mapboxgl from 'mapbox-gl';
+import { Place } from '../models/place.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,15 @@ export class MapService {
   }
   zoom = 12
 
+  places:Array<Place> = new Array<Place>();
+
   constructor() {
     mapboxgl!.accessToken = environment.mapbox.accessToken;
     navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
       this.position.lat = position.coords.latitude
       this.position.lng = position.coords.longitude
 
-      console.log(this.addMarker(this.position));
+      this.addMarker(this.position);
     })
   }
 
@@ -30,7 +33,7 @@ export class MapService {
       style: this.style,
       zoom: this.zoom,
       center: [this.position.lng, this.position.lat]
-    })
+    });
 
     this.map.addControl(new mapboxgl.NavigationControl());
     this.map.addControl(
@@ -44,28 +47,39 @@ export class MapService {
         showUserHeading: true
       })
     );
+
+    this.places.map((place:Place)=>{
+      this.addMarker(place.point);
+    })
   }
 
   geoloacilised() {
     console.log("hello");
   }
 
-  addMarker(position: any, color: string = "#0ea5e9", isDraggable: boolean = false): any {
-
+  protected addMarker(position: any, color: string = "#0ea5e9", isDraggable: boolean = false): any {
     const marker = new mapboxgl.Marker({
       color: color,
       draggable: isDraggable
-    }).setLngLat([position.lng, position.lat])
-      .addTo(this.map!);
+    })
+    .setLngLat([position.lng, position.lat])
+    .addTo(this.map!);
     
-    return marker
+    return marker;
   }
 
   removeMarker(marker: any) {
-    // Store the marker's longitude and latitude coordinates in a variable
     const lngLat = marker.getLngLat();
-    // Print the marker's longitude and latitude values in the console
     console.log(`Longitude: ${lngLat.lng}, Latitude: ${lngLat.lat}`);
+  }
+
+  addPlace(newPlace:Place):void{
+    this.places=[...this.places,newPlace];
+    this.buildMap();
+  }
+
+  getPlaces(){
+    return this.places;
   }
 
 

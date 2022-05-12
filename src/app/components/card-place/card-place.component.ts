@@ -1,3 +1,4 @@
+import { MapService } from 'src/app/services/map.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CardPlaceComponent implements OnInit {
 
-  constructor() { }
+  places:any[]=[];
+
+  constructor(private mapService:MapService) { 
+  }
 
   ngOnInit(): void {
+
+    this.places = this.mapService.getPlaces();
   }
 
 }
