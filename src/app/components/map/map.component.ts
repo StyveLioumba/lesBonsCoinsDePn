@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Place } from 'src/app/models/place.model';
 import {MapService} from "../../services/map.service";
+import {AddPlaceComponent} from "../../modals/add-place/add-place.component";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {Point} from "../../models/point.model";
 
 @Component({
   selector: 'app-map',
@@ -8,11 +10,41 @@ import {MapService} from "../../services/map.service";
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
- 
-  constructor(private map: MapService) { }
+
+  dialogConfig = new MatDialogConfig();
+  constructor(
+    private mapService: MapService,
+    private matDialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
-    this.map.buildMap()
+    this.mapService.buildMap()
   }
 
+  onTap() {
+    this.mapService.map.on('click',(e)=>{
+      this.onModal(e.lngLat as Point);
+    })
+  }
+
+
+  onModal(lngLat:Point):void{
+    this.dialogConfig.data=lngLat;
+    this.dialogConfig.width = "50%";
+    this.dialogConfig.height="90%";
+    this.dialogConfig.autoFocus = true;
+    this.dialogConfig.hasBackdrop = true;
+    this.dialogConfig.disableClose = false;
+
+    let modalDialog = this.matDialog.open(AddPlaceComponent, this.dialogConfig);
+
+    modalDialog.afterClosed().subscribe({
+      next:value=>{
+        console.log(value)
+      },
+      error:err => {
+        console.error(err)
+      }
+    })
+  }
 }

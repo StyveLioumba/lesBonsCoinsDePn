@@ -1,5 +1,6 @@
 import { MapService } from 'src/app/services/map.service';
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Place} from "../../models/place.model";
 
 @Component({
   selector: 'app-card-place',
@@ -8,14 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CardPlaceComponent implements OnInit {
 
-  places:any[]=[];
+  @Input()
+  place?:Place
 
-  constructor(private mapService:MapService) { 
+  constructor() {
   }
 
   ngOnInit(): void {
-
-    this.places = this.mapService.getPlaces();
   }
 
 }

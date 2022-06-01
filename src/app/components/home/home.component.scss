@@ -1,0 +1,29 @@
+.content-zone{
+  position: absolute;
+  z-index: 20;
+  top:0;
+  bottom: 0;
+  left: 0;
+  background: white;
+  border-radius: 8px;
+  margin: 8px;
+  width: 45%;
+  opacity: .8;
+}
+
+.p-2{
+  padding: 8px;
+}
+
+.detail-content-zone{
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  margin: 8px;
+  background: white;
+  border-radius: 8px;
+  opacity: .9;
+}

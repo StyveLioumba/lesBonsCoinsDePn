@@ -10,6 +10,13 @@ import { HomeComponent } from './components/home/home.component';
 import { MapComponent } from './components/map/map.component';
 import { HeaderComponent } from './components/header/header.component';
 import { CardPlaceComponent } from './components/card-place/card-place.component';
+import { AddPlaceComponent } from './modals/add-place/add-place.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from "@angular/material/dialog";
+import { PlacesComponent } from './components/places/places.component';
+import {MatIconModule} from "@angular/material/icon";
+import { DetailPlaceComponent } from './components/detail-place/detail-place.component';
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -18,15 +25,27 @@ import { CardPlaceComponent } from './components/card-place/card-place.component
     HomeComponent,
     MapComponent,
     HeaderComponent,
-    CardPlaceComponent
+    CardPlaceComponent,
+    AddPlaceComponent,
+    PlacesComponent,
+    DetailPlaceComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        MatIconModule,
+        ToastrModule.forRoot({
+          timeOut:5000,
+          autoDismiss:true,
+          progressBar:true,
+          progressAnimation:"increasing"
+        }),
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -7,7 +7,7 @@ import { Place } from '../models/place.model';
   providedIn: 'root'
 })
 export class MapService {
-  map?: mapboxgl.Map;
+  private _map?: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/streets-v11';
   position: any = {
     lat: -4.793305195547416,
@@ -15,7 +15,7 @@ export class MapService {
   }
   zoom = 12
 
-  places:Array<Place> = new Array<Place>();
+  private _places:Array<Place> = new Array<Place>();
 
   constructor() {
     mapboxgl!.accessToken = environment.mapbox.accessToken;
@@ -28,15 +28,17 @@ export class MapService {
   }
 
   buildMap() {
-    this.map = new mapboxgl.Map({
+    this._map = new mapboxgl.Map({
       container: 'map',
       style: this.style,
       zoom: this.zoom,
+      pitch: 36,
+      hash: true,
       center: [this.position.lng, this.position.lat]
     });
 
-    this.map.addControl(new mapboxgl.NavigationControl());
-    this.map.addControl(
+    this._map.addControl(new mapboxgl.NavigationControl());
+    this._map.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
           enableHighAccuracy: true
@@ -48,7 +50,7 @@ export class MapService {
       })
     );
 
-    this.places.map((place:Place)=>{
+    this._places.map((place:Place)=>{
       this.addMarker(place.point);
     })
   }
@@ -63,8 +65,8 @@ export class MapService {
       draggable: isDraggable
     })
     .setLngLat([position.lng, position.lat])
-    .addTo(this.map!);
-    
+    .addTo(this._map!);
+
     return marker;
   }
 
@@ -74,13 +76,16 @@ export class MapService {
   }
 
   addPlace(newPlace:Place):void{
-    this.places=[...this.places,newPlace];
+    this._places=[...this._places,newPlace];
     this.buildMap();
   }
 
-  getPlaces(){
-    return this.places;
+
+  get places(): Array<Place> {
+    return this._places;
   }
 
-
+  get map(): mapboxgl.Map {
+    return this._map!;
+  }
 }

@@ -9,7 +9,6 @@ import { MapService } from 'src/app/services/map.service';
 export class HeaderComponent implements OnInit {
 
   @Input() title:any;
-
   constructor(private mapService:MapService) { }
 
   ngOnInit(): void {
@@ -25,7 +24,8 @@ export class HeaderComponent implements OnInit {
         lat:-4.798238432733955
       }
     })
-    
+
   }
+
 
 }
