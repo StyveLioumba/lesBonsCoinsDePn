@@ -40,10 +40,10 @@ import {ToastrModule} from "ngx-toastr";
         MatDialogModule,
         MatIconModule,
         ToastrModule.forRoot({
-          timeOut:5000,
-          autoDismiss:true,
-          progressBar:true,
-          progressAnimation:"increasing"
+          timeOut: 2000,
+          progressBar: true,
+          progressAnimation: 'increasing',
+          preventDuplicates: true
         }),
     ],
   providers: [],

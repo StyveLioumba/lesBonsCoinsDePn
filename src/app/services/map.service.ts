@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from "../../environments/environment";
 import * as mapboxgl from 'mapbox-gl';
 import { Place } from '../models/place.model';
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,8 @@ export class MapService {
   zoom = 12
 
   private _places:Array<Place> = new Array<Place>();
+
+  private _placeBehavior: BehaviorSubject<Place[]> = new BehaviorSubject<Place[]>(new Array<Place>());
 
   constructor() {
     mapboxgl!.accessToken = environment.mapbox.accessToken;
@@ -55,10 +58,6 @@ export class MapService {
     })
   }
 
-  geoloacilised() {
-    console.log("hello");
-  }
-
   protected addMarker(position: any, color: string = "#0ea5e9", isDraggable: boolean = false): any {
     const marker = new mapboxgl.Marker({
       color: color,
@@ -77,12 +76,13 @@ export class MapService {
 
   addPlace(newPlace:Place):void{
     this._places=[...this._places,newPlace];
+    this._placeBehavior.next([...this._places,newPlace]);
     this.buildMap();
   }
 
 
-  get places(): Array<Place> {
-    return this._places;
+  get places(): Observable<Array<Place>>{
+    return this._placeBehavior.asObservable();
   }
 
   get map(): mapboxgl.Map {

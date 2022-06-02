@@ -7,7 +7,9 @@
     </section>
 
     <section class="h-full p-2">
-      <app-card-place></app-card-place>
+      <div *ngFor="let place of places">
+        <app-card-place></app-card-place>
+      </div>
     </section>
   </div>
 

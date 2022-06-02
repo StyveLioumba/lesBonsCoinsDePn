@@ -40,7 +40,7 @@ export class MapComponent implements OnInit {
 
     modalDialog.afterClosed().subscribe({
       next:value=>{
-        console.log(value)
+        this.ngOnInit()
       },
       error:err => {
         console.error(err)
