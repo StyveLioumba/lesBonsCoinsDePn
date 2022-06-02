@@ -6,16 +6,37 @@
       <app-header></app-header>
     </section>
 
-    <section class="h-full p-2">
-      <div *ngFor="let place of places">
-        <app-card-place></app-card-place>
+    <section class="w-full h-full p-2 clear-both flex flex-col justify-center items-center">
+      <div class="w-full mb-2 border-2 py-1 px-3 flex  justify-between rounde-md rounded-md">
+        <input class="flex-grow outline-none text-gray-600 focus:text-blue-600" [(ngModel)]="placeFilter.name" type="text" name="search" id="search" placeholder="recherche..." />
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 hover:text-blue-400 transition duration-100 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </span>
+      </div>
+      <div class="overflow-auto flex-1">
+        <div class="w-full overflow-hidden">
+          <ngx-skeleton-loader count="10" appearance="line" *ngIf="skeletonloader"> </ngx-skeleton-loader>
+        </div>
+        <div class="" *ngFor="let place of places
+        | paginate: { itemsPerPage: perPage, currentPage: page, totalItems: placeLength }
+        | filterBy: placeFilter">
+          <app-card-place [place]="place"></app-card-place>
+        </div>
+
+        <div *ngIf="(places | filterBy: placeFilter).length === 0">Aucun élément trouve.</div>
+
+      </div>
+      <div class="flex items-center justify-center py-2" *ngIf="!skeletonloader">
+        <pagination-controls (pageChange)="page = $event"></pagination-controls>
       </div>
     </section>
   </div>
 
 </section>
 
-<section class="detail-content-zone" hidden>
+<section class="detail-content-zone" [hidden]="isClose">
   <app-detail-place></app-detail-place>
 </section>
 

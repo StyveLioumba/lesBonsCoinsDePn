@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import { environment } from "../../environments/environment";
 import * as mapboxgl from 'mapbox-gl';
 import { Place } from '../models/place.model';
@@ -19,6 +19,13 @@ export class MapService {
   private _places:Array<Place> = new Array<Place>();
 
   private _placeBehavior: BehaviorSubject<Place[]> = new BehaviorSubject<Place[]>(new Array<Place>());
+  private  isCloseBehavior:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+  @Output()
+  placeClickedEvent = new EventEmitter<Place>();
+
+  @Output()
+  detailPlaceClickedEvent = new EventEmitter<BehaviorSubject<boolean>>();
 
   constructor() {
     mapboxgl!.accessToken = environment.mapbox.accessToken;
@@ -26,7 +33,7 @@ export class MapService {
       this.position.lat = position.coords.latitude
       this.position.lng = position.coords.longitude
 
-      this.addMarker(this.position);
+      //this.addMarker(this.position);
     })
   }
 
@@ -78,6 +85,15 @@ export class MapService {
     this._places=[...this._places,newPlace];
     this._placeBehavior.next([...this._places,newPlace]);
     this.buildMap();
+  }
+
+  onPlaceClicked(place: Place):void {
+    this.placeClickedEvent.emit(place);
+  }
+
+  onDetailPlaceClose(isClose:boolean):void{
+    this.isCloseBehavior.next(isClose);
+    this.detailPlaceClickedEvent.emit(this.isCloseBehavior);
   }
 
 

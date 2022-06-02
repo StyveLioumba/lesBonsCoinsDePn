@@ -17,6 +17,9 @@ import { PlacesComponent } from './components/places/places.component';
 import {MatIconModule} from "@angular/material/icon";
 import { DetailPlaceComponent } from './components/detail-place/detail-place.component';
 import {ToastrModule} from "ngx-toastr";
+import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
+import {NgxPaginationModule} from "ngx-pagination";
+import {FilterPipeModule} from "ngx-filter-pipe";
 
 @NgModule({
   declarations: [
@@ -30,22 +33,25 @@ import {ToastrModule} from "ngx-toastr";
     PlacesComponent,
     DetailPlaceComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        MatDialogModule,
-        MatIconModule,
-        ToastrModule.forRoot({
-          timeOut: 2000,
-          progressBar: true,
-          progressAnimation: 'increasing',
-          preventDuplicates: true
-        }),
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatIconModule,
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      progressBar: true,
+      progressAnimation: 'increasing',
+      preventDuplicates: true
+    }),
+    NgxSkeletonLoaderModule,
+    NgxPaginationModule,
+    FilterPipeModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

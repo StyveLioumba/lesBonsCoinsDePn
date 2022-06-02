@@ -12,10 +12,16 @@ export class CardPlaceComponent implements OnInit {
   @Input()
   place?:Place
 
-  constructor() {
+  constructor(
+    private mapService:MapService
+  ) {
   }
 
   ngOnInit(): void {
   }
 
+  onShowPlace() {
+    this.mapService.onPlaceClicked(this.place!);
+    this.mapService.onDetailPlaceClose(false);
+  }
 }
