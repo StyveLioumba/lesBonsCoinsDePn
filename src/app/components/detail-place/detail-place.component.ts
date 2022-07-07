@@ -30,6 +30,5 @@ export class DetailPlaceComponent implements OnInit,OnDestroy {
   }
 
   onClose() {
-    this.mapService.onDetailPlaceClose(true);
   }
 }

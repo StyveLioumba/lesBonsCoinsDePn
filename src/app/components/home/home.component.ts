@@ -34,12 +34,6 @@ export class HomeComponent implements OnInit,OnDestroy {
       },
       error:err => console.error(err)
     })
-
-    this.mapService.detailPlaceClickedEvent.subscribe({
-      next:(isClose:boolean)=>{
-        this.isClose = isClose;
-      }
-    })
   }
 
   ngOnDestroy(): void {

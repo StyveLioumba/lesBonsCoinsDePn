@@ -22,6 +22,5 @@ export class CardPlaceComponent implements OnInit {
 
   onShowPlace() {
     this.mapService.onPlaceClicked(this.place!);
-    this.mapService.onDetailPlaceClose(false);
   }
 }

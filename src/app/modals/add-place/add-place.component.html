@@ -5,16 +5,32 @@
       <path fill="currentColor" d="M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z" />
     </svg>
   </div>
+
   <form [formGroup]="placeFormGroup"  (ngSubmit)="onSubmit()" class="flex flex-col w-full p-10 pt-6 mx-auto my-4 mb-4 transition duration-500 ease-in-out transform bg-white border rounded-lg ">
+
     <section class="flex flex-col w-full h-full p-1 overflow-auto">
-      <label for="name" class="text-base leading-7 text-blueGray-500 mb-5">Image(s)</label>
-      <header class="flex flex-col items-center justify-center py-12 text-base text-blueGray-500 transition duration-500 ease-in-out transform bg-white border border-dashed rounded-lg focus:border-blue-500 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2">
-        <p class="flex flex-wrap justify-center mb-3 text-base leading-7 text-blueGray-500">
-          <span>Glisser déposer les images ou </span>
-        </p>
-        <input formControlName="images" type="file" class="w-auto px-2 py-1 my-2 mr-2 text-blueGray-500 transition duration-500 ease-in-out transform border rounded-md hover:text-blueGray-600 text-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-gray-100">
-      </header>
+      <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+        <ngx-dropzone-label>
+          <div>
+            <h2>Glissez deposé les images</h2>
+          </div>
+        </ngx-dropzone-label>
+        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+          <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+        </ngx-dropzone-image-preview>
+      </div>
     </section>
+    {{value}}
+    <section class="w-full my-2">
+      <mat-progress-bar
+        class=""
+        [color]="color"
+        [mode]="mode"
+        [value]="mapService.uploadPercent|async"
+        [bufferValue]="bufferValue">
+      </mat-progress-bar>
+    </section>
+
     <div class="relative pt-4">
       <label for="name" class="text-base leading-7 text-blueGray-500">Nom </label>
       <input formControlName="name" type="text" id="name" name="name" placeholder="name" class="w-full px-4 py-2 mt-2 mr-4 text-base text-black transition duration-500 ease-in-out transform rounded-lg bg-gray-100 focus:border-blueGray-500 focus:bg-white focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2">
@@ -66,7 +82,7 @@
     </div>
 
     <div class="flex items-center w-full pt-4 mb-4">
-      <button [disabled]="placeFormGroup.invalid" class="w-full py-3 text-base text-white transition duration-500 ease-in-out transform bg-green-600 border-green-600 rounded-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-green-800 "> Button </button>
+      <button class="w-full py-3 text-base text-white transition duration-500 ease-in-out transform bg-green-600 border-green-600 rounded-md focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-green-800 "> Button </button>
     </div>
   </form>
 </div>

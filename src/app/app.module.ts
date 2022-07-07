@@ -20,6 +20,12 @@ import {ToastrModule} from "ngx-toastr";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 import {NgxPaginationModule} from "ngx-pagination";
 import {FilterPipeModule} from "ngx-filter-pipe";
+import {NgxDropzoneModule} from "ngx-dropzone";
+import {AngularFireModule} from "@angular/fire/compat";
+import {environment} from "../environments/environment.prod";
+import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
+import {AngularFireStorageModule,BUCKET} from "@angular/fire/compat/storage";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -50,9 +56,16 @@ import {FilterPipeModule} from "ngx-filter-pipe";
     }),
     NgxSkeletonLoaderModule,
     NgxPaginationModule,
-    FilterPipeModule
+    FilterPipeModule,
+    NgxDropzoneModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    MatProgressBarModule
   ],
-  providers: [],
+  providers: [
+    { provide: BUCKET, useValue: environment.firebaseConfig.storageBucket },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
