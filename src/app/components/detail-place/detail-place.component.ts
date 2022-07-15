@@ -12,6 +12,7 @@ export class DetailPlaceComponent implements OnInit,OnDestroy {
 
   sub:Subscription = new Subscription();
   place?:Place;
+  rndInt:number = 1
 
   constructor(
     private mapService: MapService
@@ -21,6 +22,7 @@ export class DetailPlaceComponent implements OnInit,OnDestroy {
     this.sub = this.mapService.placeClickedEvent.subscribe({
       next:(data:Place) => {
         this.place = data
+        this.rndInt= Math.floor(Math.random() * this.place!.images.length) + 1
       }
     });
   }
@@ -30,5 +32,6 @@ export class DetailPlaceComponent implements OnInit,OnDestroy {
   }
 
   onClose() {
+    this.mapService.isHidden.next(true);
   }
 }

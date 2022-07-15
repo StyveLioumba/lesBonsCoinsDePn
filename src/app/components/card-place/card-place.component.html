@@ -1,20 +1,20 @@
 <div class="w-full flex mx-auto my-2" >
-    <div class="flex bg-gray-900 border border-gray-900 shadow-lg rounded-lg p-2">
+    <div class="flex w-full bg-gray-900 border border-gray-900 shadow-lg rounded-lg p-2">
         <div class="relative h-16 w-16 sm:mb-0 mb-2">
-            <img src="https://tailwindcomponents.com/storage/avatars/njkIbPhyZCftc4g9XbMWwVsa7aGVPajYLRXhEeoo.jpg"
-                alt="aji" class="w-16 h-16 object-cover rounded-2xl">
+            <img src="{{place!.images[1]}}"
+                alt="{{place!.name}}" class="w-16 h-16 object-cover rounded-2xl">
         </div>
-        <div class="flex-auto sm:ml-5 justify-evenly">
+        <div class="w-full sm:ml-5 justify-evenly">
             <div class="flex items-center justify-between sm:mt-2">
                 <div class="flex items-center">
                     <div class="flex flex-col">
                         <div class="w-full flex-none text-lg text-gray-200 font-bold leading-none">
-                            Nom du lieux
+                            {{place!.name}}
                         </div>
                         <div class="flex-auto text-gray-400 my-1">
                             <span class="mr-3 font-bold text-blue-900">catégorie</span>
                             <span class="mr-3 border-r border-gray-600  max-h-0"></span>
-                            <span>bonne anbiance, pas cher, moins chere</span>
+                          <span>{{(place!.description | slice:0:110)+' ...'}}</span>
                         </div>
                     </div>
                 </div>

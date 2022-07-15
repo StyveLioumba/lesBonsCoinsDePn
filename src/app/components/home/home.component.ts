@@ -34,6 +34,12 @@ export class HomeComponent implements OnInit,OnDestroy {
       },
       error:err => console.error(err)
     })
+
+    this.mapService.isHidden.subscribe({
+      next:(value:boolean) => {
+        this.isClose = value;
+      }
+    })
   }
 
   ngOnDestroy(): void {

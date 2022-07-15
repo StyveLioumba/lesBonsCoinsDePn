@@ -30,13 +30,13 @@ export class MapService {
   zoom = 12
 
   private _places:Array<Place> = new Array<Place>();
-  private downloadUrls:Array<string> = new Array<string>()
 
   private _placeBehavior: BehaviorSubject<Place[]> = new BehaviorSubject<Place[]>(new Array<Place>());
 
   uploadPercent: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   downloadURL: BehaviorSubject<string> = new BehaviorSubject<string>('');
   isUploaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isHidden: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   @Output()
   placeClickedEvent = new EventEmitter<Place>();
@@ -77,8 +77,14 @@ export class MapService {
       showUserHeading: true
     }));
 
-    this._places.map((place:Place)=>{
-      this.addMarker(place);
+
+    this.places.subscribe({
+      next:(placeList:Place[])=>{
+        placeList.map((place:Place)=>{
+          this.addMarker(place);
+        })
+      },
+      error:err => console.error(err)
     })
 
 
@@ -122,8 +128,6 @@ export class MapService {
       .setLngLat([place!.lng, place!.lat])
       .setPopup(popup)
       .addTo(this._map!);
-
-
 
     return marker;
   }
@@ -203,6 +207,7 @@ export class MapService {
   }
 
   onPlaceClicked(place: Place):void {
+    this.isHidden.next(false);
     this.placeClickedEvent.emit(place);
   }
 
